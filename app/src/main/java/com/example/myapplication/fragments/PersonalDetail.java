@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class PersonalDetail extends Fragment {
     private User user;
 
     private TextView txtFullname, txtStudentIdCard, txtBirth, txtGender, txtPlace, txtIdCard, txtSDT, txtEmail, txtAddress,txtRating;
+    private LinearLayout ln_class_code;
     private ImageView imgStar;
 
 
@@ -72,7 +74,7 @@ public class PersonalDetail extends Fragment {
         initUser();
         btnImportData.setOnClickListener(v -> {
             Intent fileintent = new Intent(Intent.ACTION_GET_CONTENT);
-            fileintent.setType("text/csv");
+            fileintent.setType("*/*");
             try {
                 startActivityForResult(fileintent, requestcode);
             } catch (ActivityNotFoundException e) {
@@ -129,6 +131,7 @@ public class PersonalDetail extends Fragment {
     private void initViews(View view) {
         txtFullname = view.findViewById(R.id.txtFullname);
         txtStudentIdCard = view.findViewById(R.id.txtStudentIdCard);
+        ln_class_code = view.findViewById(R.id.ln_class_code);
         txtBirth = view.findViewById(R.id.txtBirth);
         txtGender = view.findViewById(R.id.txtGender);
         txtPlace = view.findViewById(R.id.txtPlace);
@@ -145,7 +148,12 @@ public class PersonalDetail extends Fragment {
     private void initUser() {
         if (user != null) {
             txtFullname.setText(user.getFullName());
-            txtStudentIdCard.setText(user.getStudentCode());
+            if (user.getRole().equals(UserConstants.ROLE_STUDENT)) {
+                txtStudentIdCard.setText(user.getStudentCode());
+            } else {
+                txtStudentIdCard.setText("");
+                ln_class_code.setVisibility(View.GONE);
+            }
             txtBirth.setText(user.getDateOfBirth());
             txtGender.setText(user.getGender());
             txtPlace.setText(user.getPlaceOfBirth());

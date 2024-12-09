@@ -4,6 +4,7 @@ public class Booking {
     private int id;
     private String date;
     private String time;
+    private String createDate;
     private String content;
     private String status;
     private double rating;
@@ -12,7 +13,7 @@ public class Booking {
     public Booking(){
 
     }
-    public Booking(int id, String date, String time, String content, String status, double rating, int userId) {
+    public Booking(int id, String date, String time, String content, String status, double rating, int userId, String createDate) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -20,6 +21,7 @@ public class Booking {
         this.status = status;
         this.rating = rating;
         this.userId = userId;
+        this.createDate = createDate;
     }
 
     public int getId() {
@@ -40,6 +42,12 @@ public class Booking {
 
     public String getTime() {
         return time;
+    }
+    public String getDateTime() {
+        return time + "-" + date;
+    }   
+    public String getCreatedDate() {
+        return "09/12/2024";
     }
 
     public void setTime(String time) {

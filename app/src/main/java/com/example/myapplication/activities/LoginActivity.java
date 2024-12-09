@@ -1,8 +1,10 @@
 package com.example.myapplication.activities;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.myapplication.R;
 import com.example.myapplication.constants.UserConstants;
 import com.example.myapplication.dao.UserDAO;
+import com.example.myapplication.database.MyDatabaseHelper;
 import com.example.myapplication.models.User;
 
 
@@ -25,6 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText editUsername, editPassword;
     TextView txtError;
     AppCompatButton login;
+
+    private SQLiteDatabase db;
+    private MyDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +77,19 @@ public class LoginActivity extends AppCompatActivity {
         getWidth();
         userDAO=new UserDAO(this);
 //         Chay 1 lan xong comment lai
+//        dbHelper = MyDatabaseHelper.getInstance(this);
+//        db = dbHelper.getWritableDatabase();
+//        dbHelper.resetAllData(db);
         User tanh=new User();
-        tanh.setUsername("nam");
+        tanh.setUsername("nhung");
         tanh.setPassword("123");
-        tanh.setFullName("Pham Van nam");
-        tanh.setIdCard("2021600552");
+        tanh.setFullName("Đặng Thị Nhung");
+        tanh.setIdCard("2021602987");
         tanh.setPhone("0865923203");
         tanh.setStudentCode("2021602987");
         tanh.setGender(UserConstants.GENDER_FEMALE);
-        tanh.setEmail("dtienanh1213@gmail.com");
-        tanh.setDateOfBirth("19/09/2003");
+        tanh.setEmail("dangthinhung@gmail.com");
+        tanh.setDateOfBirth("19/09/1988");
         tanh.setAddress("Ha Noi");
         tanh.setPlaceOfBirth("Ha Noi");
         tanh.setRole(UserConstants.ROLE_TEACHER);

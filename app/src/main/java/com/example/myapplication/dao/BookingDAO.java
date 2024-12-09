@@ -56,8 +56,8 @@ public class BookingDAO {
                         cursor.getString(cursor.getColumnIndexOrThrow(BookingConstants.CONTENT)),
                         cursor.getString(cursor.getColumnIndexOrThrow(BookingConstants.STATUS)),
                         cursor.getFloat(cursor.getColumnIndexOrThrow(BookingConstants.RATING)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(BookingConstants.USER_ID))
-                );
+                        cursor.getInt(cursor.getColumnIndexOrThrow(BookingConstants.USER_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(BookingConstants.DATE)));
                 cursor.close();
                 return booking;
             }

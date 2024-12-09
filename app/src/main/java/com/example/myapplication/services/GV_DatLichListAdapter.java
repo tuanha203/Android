@@ -5,6 +5,7 @@ import com.example.myapplication.R;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,9 +124,9 @@ public class GV_DatLichListAdapter extends ArrayAdapter<Booking> {
         txtStudentId.setText(String.valueOf(user.getIdCard()));
         txtClass.setText("2021DHCNTT01");  // Placeholder class, replace if needed
         txtLocation.setText("Phòng 601 - A1");
-        txtTime.setText(booking.getTime());
+        txtTime.setText(booking.getDateTime());
         txtReason.setText(booking.getContent());
-        txtSubmissionDate.setText(booking.getDate());
+        txtSubmissionDate.setText(booking.getCreatedDate());
 
         // Initialize specific dialog views and actions
         if (layoutResId == R.layout.layout_dialog_xemdangcho) {
@@ -193,9 +194,11 @@ public class GV_DatLichListAdapter extends ArrayAdapter<Booking> {
             filteredBooks.addAll(originalBooks);
         } else {
             if(tryParseInt(text)){
-                int ID = Integer.parseInt(text);
+                String ID = text;
+                UserDAO userDAO = new UserDAO(getContext());
                 for (Booking booking : originalBooks) {
-                    if (booking.getUserId() == (ID)) {
+                    User user = userDAO.getUserById(booking.getUserId());
+                    if (ID.equals(user.getStudentCode())) {
                         filteredBooks.add(booking);
                     }
                 }

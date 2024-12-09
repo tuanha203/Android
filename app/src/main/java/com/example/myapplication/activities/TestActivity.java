@@ -1,6 +1,7 @@
 package com.example.myapplication.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -10,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.R;
+import com.example.myapplication.constants.UserConstants;
 import com.example.myapplication.models.User;
 
 public class TestActivity extends AppCompatActivity {
@@ -43,7 +45,11 @@ public class TestActivity extends AppCompatActivity {
     public void initUser(){
         User user=(User) getIntent().getSerializableExtra("user");
         txtFullname.setText(user.getFullName());
-        txtStudentIdCard.setText(user.getStudentCode());
+        if (user.getRole().equals(UserConstants.ROLE_STUDENT)) {
+            txtStudentIdCard.setText(user.getStudentCode());
+        } else {
+            txtStudentIdCard.setText("");
+        }
         txtBirth.setText(user.getDateOfBirth());
         txtGender.setText(user.getGender());
         txtPlace.setText(user.getPlaceOfBirth());

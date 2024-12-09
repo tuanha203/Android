@@ -53,11 +53,30 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 BookingConstants.CONTENT+" TEXT, " +
                 BookingConstants.STATUS+" TEXT, " +
                 BookingConstants.RATING+" REAL, " +
+                "createDate DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                 "userId INTEGER, " +
                 "FOREIGN KEY(userId) REFERENCES "+UserConstants.TABLE_USER+"(id) " +
                 ")";
         db.execSQL(createBookingTable);
     }
+    
+    public void resetAllData(SQLiteDatabase db) {
+
+        db.beginTransaction();
+        try {
+            // Delete all rows from all tables
+            db.execSQL("DELETE FROM " + BookingConstants.TABLE_BOOKING);
+            db.execSQL("DELETE FROM " + UserConstants.TABLE_USER);
+
+            // Reset auto-increment counters
+            db.execSQL("DELETE FROM sqlite_sequence WHERE name='" + BookingConstants.TABLE_BOOKING + "'");
+            db.execSQL("DELETE FROM sqlite_sequence WHERE name='" + UserConstants.TABLE_USER + "'");
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }    
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
